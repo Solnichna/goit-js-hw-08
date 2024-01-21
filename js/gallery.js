@@ -66,18 +66,44 @@ const images = [
 
 
 const gallery = document.querySelector('ul.gallery');
+let lightbox;
 
 gallery.addEventListener('click', (event) =>  {
   event.preventDefault();
 
   if (event.target.classList.contains("gallery-image")) {
-    const originalSrc = e.target.dataset.source;
-    ligthbox = basicLightbox.create(
+    const originalSrc = event.target.dataset.source;
+    
+    lightbox = basicLightbox.create(
       `<img width="1400" height="900" src="${originalSrc}">`
     );
     
     lightbox.show();
     document.addEventListener("keydown", handleKeyDown);
   }
-}
+});
+
+function handleKeyDown(event) {
+  if (event.key === "Escape" || event.code === "Escape") {
+
+    lightbox.close();
+  }
+};
+
+const makeImage = images
+.map(
+  (image) => `<li class="gallery-item">
+    <a class="gallery-link" href="${image.original}">
+      <img
+      class="gallery-image"
+      src="${image.preview}"
+      data-source="${image.original}"
+      alt="${image.description}"
+      />
+    </a>
+  </li>`
+  )
+  .join("");
+
+  gallery.innerHTML = makeImage;
 
