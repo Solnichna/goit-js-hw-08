@@ -66,20 +66,28 @@ const images = [
 
 
 const gallery = document.querySelector('ul.gallery');
+
 let lightbox;
 
-gallery.addEventListener('click', (event) =>  {
+gallery.addEventListener('click', (event) => {
   event.preventDefault();
 
   if (event.target.classList.contains("gallery-image")) {
     const originalSrc = event.target.dataset.source;
     
     lightbox = basicLightbox.create(
-      `<img width="1400" height="900" src="${originalSrc}">`
-    );
-    
-    lightbox.show();
-    document.addEventListener("keydown", handleKeyDown);
+      `<img width="1400" height="900" src="${originalSrc}">`,
+      {
+        onShow: () => {
+          document.addEventListener("keydown", handleKeyDown);
+        },
+        onClose: () => {
+          document.removeEventListener("keydown", handleKeyDown);
+        }
+      }
+      );
+
+      lightbox.show();
   }
 });
 
