@@ -65,6 +65,19 @@ const images = [
   ];
 
 
-  const galleryContainer = document.querySelector(".gallery");
+const gallery = document.querySelector('ul.gallery');
 
-  
+gallery.addEventListener('click', (event) =>  {
+  event.preventDefault();
+
+  if (event.target.classList.contains("gallery-image")) {
+    const originalSrc = e.target.dataset.source;
+    ligthbox = basicLightbox.create(
+      `<img width="1400" height="900" src="${originalSrc}">`
+    );
+    
+    lightbox.show();
+    document.addEventListener("keydown", handleKeyDown);
+  }
+}
+
